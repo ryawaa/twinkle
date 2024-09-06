@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mitndev:
+    container_name: twinkle
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    # 3000 -> 2703
+      - "2704:3000"
+    environment:
+      NEXT_PUBLIC_SPARKLE_BASE_URL: https://sparkle-demo.ryawaa.com
+    # Optional: Uncomment the following line if you have a .env file
+    # env_file:
+    #   - .env
+    restart: unless-stopped
+    networks:
+      - yanacloud
+
+networks:
+  yanacloud:
+    name: yanacloud
+    external: true
