@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import HeadTemplate from '@/components/HeadTemplate';
 import NavigationBar from '../components/NavigationBar';
 import StockPrice from '../components/StockPrice';
 import Ticker from '../components/Ticker';
@@ -9,6 +10,8 @@ import RecommendationTrendsWidget from '@/components/RecommendationTrends';
 import FinancialsWidget from '@/components/FinancialsWidget';
 import CompanyNews from './api/company-news';
 import CompanyNewsWidget from '@/components/CompanyNewsWidget';
+import HeroSection from '@/components/HeroSection';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [symbol, setSymbol] = useState('');
@@ -18,25 +21,31 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col min-h-screen items-center w-full">
+      <HeadTemplate />
       <NavigationBar onSelectSymbol={handleSelectSymbol} />
-      <div className="gap-8 flex-wrap lg:flex-nowrap flex-row flex max-w-7xl w-full p-4">
+      <main className="gap-8 flex-wrap lg:flex-nowrap flex-row flex max-w-7xl w-full p-4 flex-1">
         {symbol ? (
           <>
             <div className="flex flex-col w-full">
               <StockPrice symbol={symbol} />
               <Ticker symbol={symbol} />
-             <RecommendationTrendsWidget symbol={symbol} /> 
-             <FinancialsWidget symbol={symbol} />
+              <RecommendationTrendsWidget symbol={symbol} />
+              <FinancialsWidget symbol={symbol} />
             </div>
-            <div className="flex flex-col max-w-md">
+            <div className="flex flex-col w-full md:max-w-md gap-2">
               <CompanyProfileCard ticker={symbol} />
               <CompanyNewsWidget symbol={symbol} />
             </div>
           </>
-         ) : (<NewsColumn />)}
-        {/*  */}
-      </div>
+        ) : (
+          <div className="w-full flex flex-col items-center">
+            <HeroSection />
+            <NewsColumn />
+          </div>
+        )}
+      </main>
+      <Footer />
     </div>
   );
 }

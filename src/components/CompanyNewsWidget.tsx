@@ -45,8 +45,20 @@ const CompanyNewsWidget = ({ symbol }: CompanyNewsWidgetProps) => {
     }
   }, [symbol]);
 
+  const SkeletonLoader = () => (
+    <div className="space-y-4">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div key={index} className="rounded-lg bg-gray-300 dark:bg-gray-700 p-4 gap-3 animate-pulse">
+          <div className="h-6 bg-gray-400 dark:bg-gray-600 rounded mb-2"></div>
+          <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded mb-2"></div>
+          <div className="h-4 bg-gray-400 dark:bg-gray-600 rounded w-3/4"></div>
+        </div>
+      ))}
+    </div>
+  );
+
   if (loading) {
-    return <p>Loading...</p>;
+    return <SkeletonLoader />;
   }
 
   if (error) {
@@ -57,7 +69,7 @@ const CompanyNewsWidget = ({ symbol }: CompanyNewsWidgetProps) => {
     <div className="p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4">
       <h2 className="text-xl font-bold text-text dark:text-text mb-4">Company News for {symbol}</h2>
       <div className="space-y-4">
-        {news.map((article) => (
+        {news.slice(0, 20).map((article) => (
           <div key={article.id} className="rounded-lg bg-overlay0 dark:bg-mantle p-4">
             <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-text dark:text-text hover:underline">
               <h3 className="text-lg font-semibold mb-2">{article.headline}</h3>

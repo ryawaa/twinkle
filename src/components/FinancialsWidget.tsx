@@ -58,8 +58,19 @@ const FinancialsWidget = ({ symbol }: FinancialsWidgetProps) => {
     }
   }, [symbol]);
 
+  const SkeletonLoader = () => (
+    <div className="hidden md:block  p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4 animate-pulse">
+      <h2 className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></h2>
+      <div className="flex flex-wrap gap-4">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div key={index} className="bg-gray-300 dark:bg-gray-700 p-4 rounded-lg flex-1 min-w-[200px] h-16"></div>
+        ))}
+      </div>
+    </div>
+  );
+
   if (loading) {
-    return <p>Loading...</p>;
+    return <SkeletonLoader />;
   }
 
   if (error) {
@@ -71,7 +82,7 @@ const FinancialsWidget = ({ symbol }: FinancialsWidgetProps) => {
   }
 
   return (
-    <div className="p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4">
+    <div className="hidden md:block p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4">
       <h2 className="text-xl font-bold text-text dark:text-text mb-4">Basic Financials for {symbol}</h2>
       <div className="flex flex-wrap gap-4">
         {formattedData.map((data, index) => (

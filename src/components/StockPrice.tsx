@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PriceGraph from './PriceGraph';
 import StockPriceGraph from './StockPriceGraph';
 
@@ -20,9 +20,11 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
   const [stockData, setStockData] = useState<StockData | null>(null);
   const [stockDescription, setStockDescription] = useState<string>('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const fetchStockPrice = async (selectedSymbol: string) => {
     setError('');
+    setLoading(true);
     try {
       const res = await fetch(`/api/quote?symbol=${selectedSymbol}`);
       const data = await res.json();
@@ -35,6 +37,8 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
     } catch (err) {
       setError('Failed to fetch stock price');
       setStockData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,6 +75,10 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
     </span>
   );
 
+  const Skeleton = ({ width, height }: { width: string, height: string }) => (
+    <div className={`bg-gray-300 dark:bg-gray-700 rounded-md`} style={{ width, height }}></div>
+  );
+
   return (
     <div className="relative bg-surface0 dark:bg-surface0 p-6 rounded-t-lg shadow-md">
       <div className="absolute inset-0 opacity-20">
@@ -79,16 +87,36 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
       {symbol && (
         <div className="relative z-10">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-text dark:text-text">{symbol}</h1>
-            {stockData && (
+            {loading ? (
+              <Skeleton width="150px" height="2rem" />
+            ) : (
+              <h1 className="text-3xl font-bold text-text dark:text-text">{symbol}</h1>
+            )}
+            {loading ? (
+              <div className="flex space-x-2 my-4">
+                <Skeleton width="100px" height="2rem" />
+                <Skeleton width="100px" height="2rem" />
+              </div>
+            ) : stockData ? (
               <div className="flex space-x-2">
                 <PriceBadge label="Change:" value={stockData.d} isPositive={stockData.d >= 0} />
                 <PriceBadge label="Percent Change:" value={`${stockData.dp}%`} isPositive={stockData.dp >= 0} />
               </div>
-            )}
+            ) : null}
           </div>
-          {stockDescription && <p className="text-lg mb-4 text-text dark:text-subtext1">{stockDescription}</p>}
-          {stockData && (
+          {loading ? (
+            <Skeleton width="100%" height="1.5rem" className="my-4" />
+          ) : stockDescription && (
+            <p className="text-lg mb-4 text-text dark:text-subtext1">{stockDescription}</p>
+          )}
+          {loading ? (
+            <div className="grid grid-cols-4 gap-4 mt-4">
+              <Skeleton width="100%" height="100px" />
+              <Skeleton width="100%" height="100px" />
+              <Skeleton width="100%" height="100px" />
+              <Skeleton width="100%" height="100px" />
+            </div>
+          ) : stockData && (
             <div className="mt-4">
               <div className="text-5xl font-bold mb-2 text-subtext0 dark:text-subtext0">${stockData.c}</div>
               <div className="grid grid-cols-4 gap-4 mt-4">

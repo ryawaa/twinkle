@@ -52,8 +52,15 @@ const RecommendationTrendsWidget = ({ symbol }: RecommendationTrendsWidgetProps)
     }
   }, [symbol]);
 
+  const SkeletonLoader = () => (
+    <div className="p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4 animate-pulse">
+      <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+      <div className="h-80 bg-gray-300 dark:bg-gray-700 rounded"></div>
+    </div>
+  );
+
   if (loading) {
-    return <p>Loading...</p>;
+    return <SkeletonLoader />;
   }
 
   if (error) {
