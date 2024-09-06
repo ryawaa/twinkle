@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
 import ThemeSwitcher from './ThemeSwitcher'
+import { IoSparkles } from 'react-icons/io5'
+import { FaHamburger } from 'react-icons/fa'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
 interface NavigationBarProps {
   onSelectSymbol: (symbol: string) => void
@@ -21,9 +24,9 @@ const NavigationBar = ({ onSelectSymbol }: NavigationBarProps) => {
   }
 
   return (
-    <nav className="bg-base text-text">
-      <div className="container mx-auto max-w-8xl flex items-center justify-between py-4 px-4 lg:px-8">
-        <Link className="text-lg font-bold" href="/">TWL
+    <nav className="bg-crust transition-all text-text border-b-2 border-surface0 px-4">
+      <div className="container mx-auto max-w-8xl flex items-center justify-between py-1">
+        <Link className="text-lg font-bold flex flex-row align-middle items-center gap-2" href="/"><IoSparkles /> <span className="md:block hidden">twinkle</span>
         </Link>
         <div className="flex-grow max-w-md mx-auto lg:max-w-lg w-full">
           <SearchBar onSelectSymbol={onSelectSymbol} />
@@ -34,7 +37,7 @@ const NavigationBar = ({ onSelectSymbol }: NavigationBarProps) => {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="bg-mantle px-4 py-2 rounded focus:outline-none focus:bg-overlay0"
           >
-            X
+            <GiHamburgerMenu />
           </button>
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-surface0 rounded-md shadow-lg z-20">
