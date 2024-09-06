@@ -48,7 +48,7 @@ const PeersWidget = ({ symbol }: PeersWidgetProps) => {
         {peers.map((peer, index) => (
           <li
             key={index}
-            className="inline-block bg-text dark:bg-text text-white text-sm font-medium py-1 px-2 m-1 rounded-md"
+            className="inline-block bg-text dark:bg-crust text-white text-sm font-medium py-1 px-2 m-1 rounded-md"
           >
             {peer}
           </li>

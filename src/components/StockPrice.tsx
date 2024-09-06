@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import StockGraph from './StockGraph';
+import PriceGraph from './PriceGraph';
+import StockPriceGraph from './StockPriceGraph';
 
 interface StockPriceProps {
   symbol: string;
@@ -73,7 +74,7 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
   return (
     <div className="relative bg-surface0 dark:bg-surface0 p-6 rounded-t-lg shadow-md">
       <div className="absolute inset-0 opacity-20">
-        <StockGraph symbol={symbol} />
+        <StockPriceGraph symbol={symbol} />
       </div>
       {symbol && (
         <div className="relative z-10">

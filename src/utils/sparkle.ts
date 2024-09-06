@@ -53,3 +53,16 @@ export const fetchRecommendationTrends = async (symbol: string) => {
   const res = await fetch(url);
   return handleResponse(res);
 };
+
+export const fetchBasicFinancials = async (symbol: string) => {
+  const url = `${SPARKLE_BASE_URL}/api/v1/basic-financials?symbol=${symbol}`;
+  const res = await fetch(url);
+  return handleResponse(res);
+}
+
+export const fetchCompanyNews = async (symbol: string) => {
+  const url = `${SPARKLE_BASE_URL}/api/v1/company-news?symbol=${symbol}`;
+  const res = await fetch(url);
+  return handleResponse(res);
+}
+

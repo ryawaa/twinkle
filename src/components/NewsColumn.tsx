@@ -20,7 +20,7 @@ const NewsColumn = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await fetch('/api/news'); 
+        const res = await fetch('/api/news');
         const data = await res.json();
         const filteredNews = data.result.filter((article: any) => article.source !== 'MarketWatch');
         setNews(filteredNews);
@@ -30,7 +30,7 @@ const NewsColumn = () => {
         setLoading(false);
       }
     };
-  
+
     fetchNews();
   }, []);
 
@@ -42,10 +42,10 @@ const NewsColumn = () => {
     return <p className="text-red-500">{error}</p>;
   }
 
-
   const featuredArticle = news[0];
-  const otherArticles = news.slice(1, 7); 
+  const otherArticles = news.slice(1, 7);
   const latestArticles = news.slice(7);
+
   return (
     <div className="lg:flex lg:space-x-4">
       <div className="lg:flex-1 lg:space-y-4">
@@ -63,12 +63,12 @@ const NewsColumn = () => {
                 alt={featuredArticle.headline}
                 className="w-full h-64 object-cover"
               />
-              <div className="p-4 bg-white dark:bg-gray-800">
-                <h3 className="text-xl font-bold">{featuredArticle.headline}</h3>
-                <p className="text-sm text-gray-500">
+              <div className="p-4 bg-surface0 dark:bg-surface0">
+                <h3 className="text-xl font-bold text-text dark:text-text">{featuredArticle.headline}</h3>
+                <p className="text-sm text-subtext1 dark:text-subtext1">
                   {new Date(featuredArticle.datetime * 1000).toLocaleString()} | {featuredArticle.source}
                 </p>
-                <p className="text-sm mt-2">{featuredArticle.summary}</p>
+                <p className="text-sm mt-2 text-text dark:text-subtext1">{featuredArticle.summary}</p>
               </div>
             </a>
           )}
@@ -89,9 +89,9 @@ const NewsColumn = () => {
                 alt={article.headline}
                 className="w-full h-32 object-cover rounded-t-lg"
               />
-              <div className="p-2 bg-white h-full dark:bg-gray-800">
-                <h3 className="text-sm font-semibold">{article.headline}</h3>
-                <p className="text-xs text-gray-500">
+              <div className="p-2 bg-surface0 dark:bg-surface0 h-full">
+                <h3 className="text-sm font-semibold text-text dark:text-text">{article.headline}</h3>
+                <p className="text-xs text-subtext1 dark:text-subtext1">
                   {new Date(article.datetime * 1000).toLocaleString()} | {article.source}
                 </p>
               </div>
@@ -101,8 +101,8 @@ const NewsColumn = () => {
       </div>
 
       {/* Latest news sidebar */}
-      <div className="mt-4 lg:mt-0 lg:w-1/4 lg:order-last border p-4 rounded-lg bg-white dark:bg-gray-800 lg:overflow-y-auto lg:h-screen">
-        <h2 className="text-xl font-bold mb-4">Latest</h2>
+      <div className="mt-4 lg:mt-0 lg:w-1/4 lg:order-last border-text dark:border-crust border p-4 rounded-lg bg-surface0 dark:bg-surface0 lg:overflow-y-auto lg:h-screen">
+        <h2 className="text-xl font-bold text-text dark:text-text mb-4">Latest</h2>
         <ul>
           {latestArticles.map(article => (
             <li key={article.id} className="mb-4">
@@ -112,8 +112,8 @@ const NewsColumn = () => {
                 rel="noopener noreferrer"
                 className="hover:underline block"
               >
-                <p className="text-sm font-semibold">{article.headline}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-sm font-semibold text-text dark:text-text">{article.headline}</p>
+                <p className="text-xs text-subtext1 dark:text-subtext1">
                   {new Date(article.datetime * 1000).toLocaleString()}
                 </p>
               </a>

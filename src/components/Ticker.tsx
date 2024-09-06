@@ -97,8 +97,7 @@ const Ticker = ({ symbol }: { symbol: string }) => {
           <div className="flex flex-row space-x-4 ed-lg text-xs">
             <strong>LIVE ${latestTrade.s}</strong>
             <div>Traded {latestTrade.v} @ ${latestTrade.p} on {new Date(latestTrade.t).toLocaleTimeString()}</div>
-            <div>Type: {identifyTradeType(latestTrade)}</div>
-            <div>Conditions: {getTradeConditions(latestTrade)}</div>
+            <div>{getTradeConditions(latestTrade)}</div>
           </div>
         </div>
       )}

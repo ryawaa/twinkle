@@ -140,7 +140,7 @@ const SearchBar = ({ onSelectSymbol }: SearchBarProps) => {
             {isPickerVisible && (
                 <>
                     {
-                        <ul className="absolute border bg-mantle w-full mt-2 rounded-md border-surface0 overflow-hidden">
+                        <ul className="z-50 absolute border bg-mantle w-full mt-2 rounded-md border-surface0 overflow-hidden">
 
                               {suggestions.map((item, index) => (
                                   <li
