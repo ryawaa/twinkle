@@ -1,7 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 
-const SearchBar = ({ onSelectSymbol }: { onSelectSymbol: (symbol: string) => void }) => {
+interface SearchBarProps {
+  onSelectSymbol: (symbol: string) => void
+}
+
+const SearchBar = ({ onSelectSymbol }: SearchBarProps) => {
   const [query, setQuery] = useState('')
   const [suggestions, setSuggestions] = useState<{ symbol: string, description: string }[]>([])
   const [loading, setLoading] = useState(false)
@@ -13,7 +17,6 @@ const SearchBar = ({ onSelectSymbol }: { onSelectSymbol: (symbol: string) => voi
     try {
       const res = await fetch(`/api/search?query=${query}`)
       const data = await res.json()
-      
       if (data.result && data.result.length > 0) {
         setSuggestions(data.result)
       } else {

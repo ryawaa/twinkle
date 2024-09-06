@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Ticker from './Ticker'
 import SearchBar from './SearchBar'
 
-const StockPrice = () => {
-  const [symbol, setSymbol] = useState('')
+interface StockPriceProps {
+  symbol: string
+}
+
+const StockPrice = ({ symbol }: StockPriceProps) => {
   const [price, setPrice] = useState<number | null>(null)
   const [error, setError] = useState('')
 
@@ -13,18 +17,27 @@ const StockPrice = () => {
       const data = await res.json()
       if (data.error) {
         setError(data.error)
+        setPrice(null)
       } else {
         setPrice(data.c)
-        setSymbol(selectedSymbol)
       }
     } catch (err) {
       setError('Failed to fetch stock price')
+      setPrice(null)
     }
   }
 
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout
+    if (symbol) {
+      fetchStockPrice(symbol)
+      intervalId = setInterval(() => fetchStockPrice(symbol), 300000) // 300000 ms = 5 minutes
+    }
+    return () => clearInterval(intervalId)
+  }, [symbol])
+
   return (
     <div className="my-4">
-      <SearchBar onSelectSymbol={fetchStockPrice} />
       {symbol && (
         <div>
           <h2 className="text-2xl font-bold mt-4">Symbol: {symbol}</h2>
@@ -38,6 +51,7 @@ const StockPrice = () => {
               <p>{error}</p>
             </div>
           )}
+          <Ticker symbol={symbol} />
         </div>
       )}
     </div>
