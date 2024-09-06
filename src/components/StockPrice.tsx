@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Ticker from './Ticker';
 
 interface StockPriceProps {
   symbol: string;
@@ -13,10 +12,6 @@ interface StockData {
   l: number; // Low price of the day
   o: number; // Open price of the day
   pc: number; // Previous close price
-}
-
-interface StockDescription {
-  description: string;
 }
 
 const StockPrice = ({ symbol }: StockPriceProps) => {
@@ -69,27 +64,46 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
   }, [symbol]);
 
   return (
-    <div className="">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mt-6">
       {symbol && (
         <div>
-          <h2 className="text-xl font-bold"></h2>
-          <h1 className="text-2xl font-bold mt-4">{symbol}</h1>
-          
-          {stockDescription && <p className="text-lg mb-4">{stockDescription}</p>}
+          <h1 className="text-3xl font-bold mb-2">{symbol}</h1>
+          {stockDescription && <p className="text-lg mb-4 text-gray-600">{stockDescription}</p>}
           
           {stockData !== null && (
-            <div className="mt-2">
-              <p>Current Price: ${stockData.c}</p>
-              <p>Change: ${stockData.d}</p>
-              <p>Percent Change: {stockData.dp}%</p>
-              <p>High Price of the Day: ${stockData.h}</p>
-              <p>Low Price of the Day: ${stockData.l}</p>
-              <p>Open Price of the Day: ${stockData.o}</p>
-              <p>Previous Close Price: ${stockData.pc}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Current Price:</p>
+                <p className="text-2xl">${stockData.c}</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Change:</p>
+                <p className="text-2xl">${stockData.d}</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Percent Change:</p>
+                <p className="text-2xl">{stockData.dp}%</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">High Price of the Day:</p>
+                <p className="text-2xl">${stockData.h}</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Low Price of the Day:</p>
+                <p className="text-2xl">${stockData.l}</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Open Price of the Day:</p>
+                <p className="text-2xl">${stockData.o}</p>
+              </div>
+              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                <p className="text-xl font-semibold">Previous Close Price:</p>
+                <p className="text-2xl">${stockData.pc}</p>
+              </div>
             </div>
           )}
           {error && (
-            <div className="mt-2 text-red-500">
+            <div className="mt-4 p-4 bg-red-100 dark:bg-red-700 text-red-800 dark:text-red-100 rounded-lg">
               <p>{error}</p>
             </div>
           )}

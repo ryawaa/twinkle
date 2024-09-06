@@ -25,7 +25,7 @@ const NavigationBar = ({ onSelectSymbol }: NavigationBarProps) => {
 
   return (
     <nav className="bg-crust transition-all text-text border-b-2 border-surface0 px-4">
-      <div className="container mx-auto max-w-8xl flex items-center justify-between py-1">
+      <div className="container mx-auto max-w-7xl flex items-center justify-between py-1">
         <Link className="text-lg font-bold flex flex-row align-middle items-center gap-2" href="/"><IoSparkles /> <span className="md:block hidden">twinkle</span>
         </Link>
         <div className="flex-grow max-w-md mx-auto lg:max-w-lg w-full">

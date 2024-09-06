@@ -39,3 +39,12 @@ export const fetchNews = async () => {
   }
   return res.json();
 }
+
+export const fetchProfile = async (symbol: string) => {
+  const url = `${SPARKLE_BASE_URL}/api/v1/profile?symbol=${symbol}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Error fetching profile');
+  }
+  return res.json();
+};
