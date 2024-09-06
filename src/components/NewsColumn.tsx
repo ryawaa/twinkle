@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+// Define the structure of a news article
 interface NewsArticle {
   category: string;
   datetime: number;
@@ -12,28 +13,36 @@ interface NewsArticle {
   url: string;
 }
 
-// Skeleton components for loading state
+// Skeleton component for the loading state
 const Skeleton = ({ className }: { className: string }) => (
   <div className={`animate-pulse bg-overlay1 ${className}`}></div>
 );
 
+// Main component to display news articles
 const NewsColumn = () => {
+  // State to hold the list of news articles
   const [news, setNews] = useState<NewsArticle[]>([]);
+  // State to manage the loading state
   const [loading, setLoading] = useState(true);
+  // State to handle any errors that might occur during the fetch
   const [error, setError] = useState('');
 
+  // Effect to fetch news articles when the component mounts
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        // Fetch news data from the API
         const res = await fetch('/api/news');
         const data = await res.json();
-        const filteredNews = data.result.filter(
-          (article: any) => article.source !== 'MarketWatch'
-        );
+        // Filter out news articles from "MarketWatch"
+        const filteredNews = data.result.filter((article: any) => article.source !== 'MarketWatch');
+        // Update the news state with the filtered articles
         setNews(filteredNews);
       } catch (err) {
+        // Update the error state if the fetch fails
         setError('Failed to fetch news');
       } finally {
+        // Set loading to false after the fetch operation is complete
         setLoading(false);
       }
     };
@@ -41,6 +50,7 @@ const NewsColumn = () => {
     fetchNews();
   }, []);
 
+  // Render the loading skeleton
   if (loading) {
     return (
       <div className="lg:flex lg:space-x-4 w-full">
@@ -60,10 +70,7 @@ const NewsColumn = () => {
           {/* Other articles skeleton */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <div
-                key={index}
-                className="block overflow-hidden rounded-lg shadow-lg"
-              >
+              <div key={index} className="block overflow-hidden rounded-lg shadow-lg">
                 <Skeleton className="w-full h-32 rounded-t-lg" />
                 <div className="p-2 bg-surface0 dark:bg-surface0 h-full">
                   <Skeleton className="h-4 mb-1" />
@@ -76,9 +83,7 @@ const NewsColumn = () => {
 
         {/* Latest news sidebar skeleton */}
         <div className="mt-4 lg:mt-0 lg:w-1/4 lg:order-last border-text dark:border-crust border p-4 rounded-lg bg-surface0 dark:bg-surface0 lg:overflow-y-auto lg:h-screen">
-          <h2 className="text-xl font-bold text-text dark:text-text mb-4">
-            Latest
-          </h2>
+          <h2 className="text-xl font-bold text-text dark:text-text mb-4">Latest</h2>
           <ul>
             {Array.from({ length: 5 }).map((_, index) => (
               <li key={index} className="mb-4">
@@ -92,10 +97,12 @@ const NewsColumn = () => {
     );
   }
 
+  // Render the error message if any
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
 
+  // Prepare the news articles for display
   const featuredArticle = news[0];
   const otherArticles = news.slice(1, 7);
   const latestArticles = news.slice(7);
@@ -122,8 +129,7 @@ const NewsColumn = () => {
                   {featuredArticle.headline}
                 </h3>
                 <p className="text-sm text-subtext1 dark:text-subtext1">
-                  {new Date(featuredArticle.datetime * 1000).toLocaleString()} |{' '}
-                  {featuredArticle.source}
+                  {new Date(featuredArticle.datetime * 1000).toLocaleString()} | {featuredArticle.source}
                 </p>
                 <p className="text-sm mt-2 text-text dark:text-subtext1">
                   {featuredArticle.summary}
@@ -153,8 +159,7 @@ const NewsColumn = () => {
                   {article.headline}
                 </h3>
                 <p className="text-xs text-subtext1 dark:text-subtext1">
-                  {new Date(article.datetime * 1000).toLocaleString()} |{' '}
-                  {article.source}
+                  {new Date(article.datetime * 1000).toLocaleString()} | {article.source}
                 </p>
               </div>
             </a>
@@ -163,10 +168,8 @@ const NewsColumn = () => {
       </div>
 
       {/* Latest news sidebar */}
-      <div className="mt-4 lg:mt-0 lg:w-1/4 lg:order-last border- dark:border-crust border p-4  lg:overflow-y-auto lg:h-screen bg-surface0 dark:bg-surface0 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold text-text dark:text-text mb-4">
-          Latest
-        </h2>
+      <div className="mt-4 lg:mt-0 lg:w-1/4 lg:order-last border- dark:border-crust border p-4 lg:overflow-y-auto lg:h-screen bg-surface0 dark:bg-surface0 rounded-lg shadow-md">
+        <h2 className="text-xl font-bold text-text dark:text-text mb-4">Latest</h2>
         <ul>
           {latestArticles.map((article) => (
             <li key={article.id} className="mb-4">

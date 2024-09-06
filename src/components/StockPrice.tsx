@@ -16,23 +16,28 @@ interface StockData {
   pc: number; // Previous close price
 }
 
+/**
+ * StockPrice component fetches and displays stock price details and trends for a given symbol.
+ * @param symbol - The stock symbol to display the information for.
+ */
 const StockPrice = ({ symbol }: StockPriceProps) => {
   const [stockData, setStockData] = useState<StockData | null>(null);
   const [stockDescription, setStockDescription] = useState<string>('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // Fetch stock price data from the API
   const fetchStockPrice = async (selectedSymbol: string) => {
     setError('');
     setLoading(true);
     try {
       const res = await fetch(`/api/quote?symbol=${selectedSymbol}`);
       const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-        setStockData(null);
-      } else {
+      if (res.ok) {
         setStockData(data);
+      } else {
+        setError(data.error || 'An error occurred');
+        setStockData(null);
       }
     } catch (err) {
       setError('Failed to fetch stock price');
@@ -42,13 +47,14 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
     }
   };
 
+  // Fetch stock description from the API
   const fetchStockDescription = async (selectedSymbol: string) => {
     setError('');
     try {
       const res = await fetch(`/api/search?query=${selectedSymbol}`);
       const data = await res.json();
-      if (data.result && data.result.length > 0) {
-        setStockDescription(data.result[0].description); // Assume the first result matches
+      if (res.ok && data.result && data.result.length > 0) {
+        setStockDescription(data.result[0]?.description || 'No description available');
       } else {
         setError('Description not found');
         setStockDescription('');
@@ -69,18 +75,21 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
     return () => clearInterval(intervalId);
   }, [symbol]);
 
+  // Badge component to show price changes
   const PriceBadge = ({ label, value, isPositive = true }: { label: string, value: number | string, isPositive?: boolean }) => (
     <span className={`inline-block px-2 py-1 text-xs font-medium ${isPositive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} rounded-md`}>
       {label} {value}
     </span>
   );
 
-  const Skeleton = ({ width, height }: { width: string, height: string }) => (
-    <div className={`bg-gray-300 dark:bg-gray-700 rounded-md`} style={{ width, height }}></div>
+  // Skeleton loader component for loading states
+  const Skeleton = ({ width, height, className = '' }: { width: string, height: string, className?: string }) => (
+    <div className={`bg-gray-300 dark:bg-gray-700 rounded-md ${className}`} style={{ width, height }}></div>
   );
 
   return (
     <div className="relative bg-surface0 dark:bg-surface0 p-6 rounded-t-lg shadow-md">
+      {/* Background StockPriceGraph for visual effect */}
       <div className="absolute inset-0 opacity-20">
         <StockPriceGraph symbol={symbol} />
       </div>
@@ -100,7 +109,7 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
             ) : stockData ? (
               <div className="flex space-x-2">
                 <PriceBadge label="Change:" value={stockData.d} isPositive={stockData.d >= 0} />
-                <PriceBadge label="Percent Change:" value={`${stockData.dp}%`} isPositive={stockData.dp >= 0} />
+                <PriceBadge label="Percent Change:" value={`${stockData.dp.toFixed(2)}%`} isPositive={stockData.dp >= 0} />
               </div>
             ) : null}
           </div>
@@ -118,23 +127,23 @@ const StockPrice = ({ symbol }: StockPriceProps) => {
             </div>
           ) : stockData && (
             <div className="mt-4">
-              <div className="text-5xl font-bold mb-2 text-subtext0 dark:text-subtext0">${stockData.c}</div>
+              <div className="text-5xl font-bold mb-2 text-subtext0 dark:text-subtext0">${stockData.c.toFixed(2)}</div>
               <div className="grid grid-cols-4 gap-4 mt-4">
                 <div className="bg-overlay0 dark:bg-overlay0 p-4 rounded-lg shadow-md">
                   <p className="text-sm font-semibold text-text dark:text-subtext1">High</p>
-                  <p className="text-xl text-text dark:text-text">${stockData.h}</p>
+                  <p className="text-xl text-text dark:text-text">${stockData.h.toFixed(2)}</p>
                 </div>
                 <div className="bg-overlay0 dark:bg-overlay0 p-4 rounded-lg shadow-md">
                   <p className="text-sm font-semibold text-text dark:text-subtext1">Low</p>
-                  <p className="text-xl text-text dark:text-text">${stockData.l}</p>
+                  <p className="text-xl text-text dark:text-text">${stockData.l.toFixed(2)}</p>
                 </div>
                 <div className="bg-overlay0 dark:bg-overlay0 p-4 rounded-lg shadow-md">
                   <p className="text-sm font-semibold text-text dark:text-subtext1">Open</p>
-                  <p className="text-xl text-text dark:text-text">${stockData.o}</p>
+                  <p className="text-xl text-text dark:text-text">${stockData.o.toFixed(2)}</p>
                 </div>
                 <div className="bg-overlay0 dark:bg-overlay0 p-4 rounded-lg shadow-md">
                   <p className="text-sm font-semibold text-text dark:text-subtext1">Previous Close</p>
-                  <p className="text-xl text-text dark:text-text">${stockData.pc}</p>
+                  <p className="text-xl text-text dark:text-text">${stockData.pc.toFixed(2)}</p>
                 </div>
               </div>
             </div>

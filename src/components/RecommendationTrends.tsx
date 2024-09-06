@@ -8,6 +8,9 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
+  defs,
+  linearGradient,
+  stop,
 } from 'recharts';
 
 interface RecommendationTrendsWidgetProps {
@@ -23,11 +26,16 @@ interface RecommendationTrend {
   strongSell: number;
 }
 
+/**
+ * RecommendationTrendsWidget component fetches and displays recommendation trends for a given stock symbol.
+ * @param symbol - The stock symbol to fetch recommendation trends for.
+ */
 const RecommendationTrendsWidget = ({ symbol }: RecommendationTrendsWidgetProps) => {
   const [recommendationTrends, setRecommendationTrends] = useState<RecommendationTrend[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Fetch recommendation trends whenever the symbol changes
   useEffect(() => {
     const fetchRecommendationTrends = async () => {
       setLoading(true);
@@ -52,6 +60,7 @@ const RecommendationTrendsWidget = ({ symbol }: RecommendationTrendsWidgetProps)
     }
   }, [symbol]);
 
+  // SkeletonLoader component for loading state
   const SkeletonLoader = () => (
     <div className="p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4 animate-pulse">
       <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>

@@ -4,11 +4,16 @@ interface PeersWidgetProps {
   symbol: string;
 }
 
+/**
+ * PeersWidget component fetches and displays peer companies for a given symbol.
+ */
 const PeersWidget = ({ symbol }: PeersWidgetProps) => {
+  // State variables to manage peers data, loading state, and errors
   const [peers, setPeers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // useEffect hook to fetch peers whenever the symbol changes
   useEffect(() => {
     const fetchPeers = async () => {
       setLoading(true);
@@ -33,14 +38,17 @@ const PeersWidget = ({ symbol }: PeersWidgetProps) => {
     }
   }, [symbol]);
 
+  // If the data is still loading, show a loading message
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  // If there was an error fetching the data, show an error message
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
 
+  // Render the list of peers
   return (
     <div className="p-4 bg-surface0 dark:bg-surface0 rounded-lg shadow-md mt-4">
       <h2 className="text-xl font-bold text-text dark:text-text mb-2">Peers for {symbol}</h2>
