@@ -17,7 +17,6 @@ const Ticker = ({ symbol }: { symbol: string }) => {
   const [webSocketInitialized, setWebSocketInitialized] = useState(false);
 
   useEffect(() => {
-
     const initializePrices = async () => {
       try {
         const quote = await fetchQuote(symbol);
@@ -57,8 +56,9 @@ const Ticker = ({ symbol }: { symbol: string }) => {
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.type === 'trade') {
-        setLatestTrade(data.data[0]);
+      if (data.type === 'trade' && data.data.some((trade: Trade) => trade.s === symbol)) {
+        const tradeForSymbol = data.data.find((trade: Trade) => trade.s === symbol);
+        setLatestTrade(tradeForSymbol);
       }
     };
 
@@ -93,10 +93,12 @@ const Ticker = ({ symbol }: { symbol: string }) => {
   return (
     <div className="">
       {symbol && latestTrade && (
-        <div className="border-b dark:bg-overlay0 bg-overlay0 p-2 px-4 rounded-lg">
+        <div className="border-b dark:bg-overlay0 bg-overlay0 p-2 px-4 rounded-b-lg">
           <div className="flex flex-row space-x-4 ed-lg text-xs">
             <strong>LIVE ${latestTrade.s}</strong>
             <div>Traded {latestTrade.v} @ ${latestTrade.p} on {new Date(latestTrade.t).toLocaleTimeString()}</div>
+            <div>Type: {identifyTradeType(latestTrade)}</div>
+            <div>Conditions: {getTradeConditions(latestTrade)}</div>
           </div>
         </div>
       )}

@@ -47,3 +47,9 @@ export const fetchPeers = async (symbol: string) => {
   const res = await fetch(url);
   return handleResponse(res);
 };
+
+export const fetchRecommendationTrends = async (symbol: string) => {
+  const url = `${SPARKLE_BASE_URL}/api/v1/recommendation-trends?symbol=${symbol}`;
+  const res = await fetch(url);
+  return handleResponse(res);
+};

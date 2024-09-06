@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PeersWidget from './PeersWidget';
 
 interface CompanyProfileProps {
   ticker: string;
@@ -51,29 +52,30 @@ const CompanyProfileCard = ({ ticker }: CompanyProfileProps) => {
   }
 
   return (
-    <div className="p-4 border bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-4 flex-col">
-      <h1 className="mb-4 font-bold">About this company</h1>
-      <div className="flex items-center space-x-4 mb-4">
+    <div className="p-6 bg-surface0 dark:bg-surface0 rounded-lg shadow-md">
+      <h1 className="text-xl font-bold text-text dark:text-text">About this company</h1>
+      <div className="flex items-center gap-4 mt-4">
         <img src={profile.logo} alt={`${profile.name} logo`} className="w-16 h-16 object-cover rounded-lg" />
         <div>
-          <h2 className="text-xl font-bold">{profile.name}</h2>
-          <p className="text-sm text-gray-500">{profile.ticker} | {profile.finnhubIndustry}</p>
+          <h2 className="text-2xl font-bold text-text dark:text-text">{profile.name}</h2>
+          <p className="text-sm text-text dark:text-subtext1">{profile.ticker} | {profile.finnhubIndustry}</p>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         <div>
-          <p><span className="font-semibold">Country:</span> {profile.country}</p>
-          <p><span className="font-semibold">Currency:</span> {profile.currency}</p>
-          <p><span className="font-semibold">Exchange:</span> {profile.exchange}</p>
-          <p><span className="font-semibold">Market Cap:</span> ${profile.marketCapitalization.toFixed(2)}B</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Country:</span> {profile.country}</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Currency:</span> {profile.currency}</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Exchange:</span> {profile.exchange}</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Market Cap:</span> ${profile.marketCapitalization.toFixed(2)}B</p>
         </div>
         <div>
-          <p><span className="font-semibold">IPO Date:</span> {new Date(profile.ipo).toLocaleDateString()}</p>
-          <p><span className="font-semibold">Outstanding Shares:</span> {profile.shareOutstanding.toFixed(2)}M</p>
-          <p><span className="font-semibold">Phone:</span> {profile.phone}</p>
-          <p><span className="font-semibold">Website:</span> <a href={profile.weburl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{profile.weburl}</a></p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">IPO Date:</span> {new Date(profile.ipo).toLocaleDateString()}</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Outstanding Shares:</span> {profile.shareOutstanding.toFixed(2)}M</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Phone:</span> {profile.phone}</p>
+          <p className="text-text dark:text-subtext1"><span className="font-semibold text-text dark:text-subtext1">Website:</span> <a href={profile.weburl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{profile.weburl}</a></p>
         </div>
       </div>
+      <PeersWidget symbol={ticker} />
     </div>
   );
 };

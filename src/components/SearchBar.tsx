@@ -177,7 +177,7 @@ const SearchBar = ({ onSelectSymbol }: SearchBarProps) => {
                                                     ? "Searching..."
                                                     : "Start searching"
                                                 : `Searching...`
-                                            : `Showing top hits for '${query}'. (Matched ${totalCount} result${totalCount > 1 ? "s" : ""})`}
+                                            : `Showing top hits for '${query}'. (Matched ${totalCount} result${totalCount > 1 ? "s" : ""}).`}
                                     </span>
                                     {loading && (
                                         <span
