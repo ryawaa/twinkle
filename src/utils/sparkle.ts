@@ -30,3 +30,12 @@ export const startWebSocket = async () => {
   }
   return res.json();
 };
+
+export const fetchNews = async () => {
+  const url = `${SPARKLE_BASE_URL}/api/v1/marketnews`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Error fetching news');
+  }
+  return res.json();
+}
