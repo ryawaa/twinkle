@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![image](https://github.com/user-attachments/assets/8b11ecf6-13ac-404a-b53a-77d02d12d281)
 
-## Getting Started
+# Twinkle ✨ - Your Symbol Twinkling at the Distance
 
-First, run the development server:
+**Twinkle** is your charming companion for staying updated on your favorite stocks, offering a clean, delightful, and user-friendly interface. Powered by my **Sparkle Aggregator API** ([check out the API here](https://github.com/ryanamay/sparkle)), Twinkle is a feature-rich app that lets you easily track stock prices in real-time.
 
+> **Demo**: [twinkie-demo.ryawaa.com](https://twinkie-demo.ryawaa.com) 🌐
+> 
+> **Source Code**: Available here and on [**code.lgbt**](https://code.lgbt/ryanamay/twinkle)! 🏳️‍🌈
+
+---
+
+## 🚀 Features
+
+- **Real-Time Stock Prices**: Keep track of the latest stock prices with real-time updates.
+- **Beautiful UI**: Designed with both light and dark modes, making it comfortable for all-day use.
+- **Company Information**: Get detailed insights into each company's financials, recommendations, and news.
+- **Live News Feed**: Stay up-to-date with related financial and market news for your favorite stocks.
+- **Recommendation Trends**: Visualize trends such as strong buy, buy, hold, sell, and strong sell for selected stocks.
+- **Dark Mode**: Automatic dark mode for a more comfortable viewing experience at night or in low-light environments.
+- **Source Code Available**: Open source on [**code.lgbt**](https://code.lgbt/ryanamay/twinkle) 🏳️‍⚧️!
+
+---
+
+## 🛠 Running Twinkle Locally (Recommended)
+
+This project is not production-ready, but you can easily run it locally. I've prioritized feature richness over simplicity in this version, but a refactor is on the way in the `branch/refactor`.
+
+### 1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://code.lgbt/ryanamay/twinkle
+cd twinkle
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set up your environment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You'll need to create a `.env` file with the following content:
+```env
+NEXT_PUBLIC_SPARKLE_BASE_URL=https://sparkle-demo.ryawaa.com
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Running with Docker Compose (Note: TypeScript issues may arise when building)
+```bash
+docker-compose up
+```
+For now, it's better to run the project locally without Docker until the issues are resolved.
 
-## Learn More
+### 4. Running Locally (Manual Setup):
+```bash
+npm install
+npm run dev
+```
+This will start the application on [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Though it's not yet production-ready, you can deploy Twinkle using any cloud provider that supports Docker or by running it directly on a server. Just keep in mind that the current codebase might need refinement for production environments, and the refactor branch is in progress.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Twinkle is licensed under an open-source license. Feel free to use it, contribute, and make it better.
+##### Note: The repository is also hosted on code.lgbt – a community-driven git platform for diverse developers! 🌈
